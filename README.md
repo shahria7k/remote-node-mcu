@@ -37,7 +37,42 @@ This guide outlines the process and provides the code necessary for setting up a
 The system consists of several components including the device firmware, a backend server, and a mobile app. The firmware supports OTA updates and can be configured over Bluetooth. The backend server handles user authentication, device registration, and firmware updates. The mobile app facilitates initial WiFi setup.
 
 ## OTA Updates
+```cpp
+```cpp
+// Include necessary libraries
+#include <WiFi.h>
+#include <PubSubClient.h>
+#include <Update.h>
 
+// Initialize WiFi and MQTT client
+WiFiClient espClient;
+PubSubClient client(espClient);
+
+// WiFi credentials (to be configured via Bluetooth)
+String ssid = "";
+String password = "";
+
+// MQTT server details
+const char* mqtt_server = "your_mqtt_broker_address";
+
+void setup() {
+  // Initialize serial communication
+  Serial.begin(115200);
+  
+  // Setup WiFi and MQTT connection here
+}
+
+void loop() {
+  // MQTT loop to listen for OTA commands
+  if (!client.connected()) {
+    reconnect();
+  }
+  client.loop();
+}
+
+// Implement OTA update logic based on MQTT commands
+// Function to reconnect and subscribe to MQTT topic for OTA
+```
 ### Bootloader Modification
 
 Modify the bootloader to support OTA updates. This includes checking for new firmware versions, downloading, and applying them.
