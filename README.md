@@ -1,6 +1,4 @@
-Here's a comprehensive documentation in Markdown format, merging the previous structures with the detailed code snippets for both the ESP32 setup and the backend system setup. This documentation aims to provide a complete guide for developing a remote device management system that includes OTA updates, WiFi configuration via Bluetooth, user authentication, device registration, and a verification system for OTA deployment.
 
-```markdown
 # Comprehensive Guide for Remote Device Management System
 
 This guide provides a complete framework for developing a system to remotely manage ESP32/NodeMCU devices. It includes instructions for setting up OTA updates, configuring WiFi credentials via Bluetooth, user authentication, device registration, and implementing a verification process for firmware updates.
@@ -127,8 +125,3 @@ Ensure secure communication, implement authentication and authorization, and con
 ## Conclusion
 
 This guide provides a blueprint for building a remote device management system, covering device setup, backend infrastructure, and security considerations.
-```
-
-This comprehensive documentation merges the structure and content from previous
-
- discussions, providing a holistic view of creating a remote device management system with all necessary components and code snippets included.
