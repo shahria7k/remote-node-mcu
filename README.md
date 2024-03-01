@@ -55,6 +55,24 @@ Use MQTT over SSL/TLS or HTTPS for secure communication between the devices and 
 Devices can check for updates periodically, receive notifications via MQTT, or be manually triggered through a web interface.
 
 ## Configuring WiFi via Bluetooth
+```cpp
+#include "BluetoothSerial.h"
+BluetoothSerial SerialBT;
+
+void setup() {
+  Serial.begin(115200);
+  SerialBT.begin("ESP32_BT_Config");
+}
+
+void loop() {
+  if (SerialBT.available()) {
+    String ssid = SerialBT.readStringUntil('\n');
+    String password = SerialBT.readStringUntil('\n');
+    // Connect to WiFi using ssid and password
+  }
+}
+
+```
 
 ### ESP32 Bluetooth Configuration
 
@@ -103,19 +121,67 @@ Once verified, the firmware is approved for deployment. Devices then receive an 
 ### TypeScript Interfaces
 
 ```typescript
-// Example TypeScript interfaces for devices, users, and firmware
+// models/Device.ts
+export interface Device {
+  _id: string;
+  userId: string;
+  name: string;
+  macAddress: string;
+  registeredAt: Date;
+}
+
+// models/User.ts
+export interface User {
+  _id: string;
+  email: string;
+  password: string; // Hashed password
+  createdAt: Date;
+}
+
+// models/Firmware.ts
+export interface Firmware {
+  _id: string;
+  version: string;
+  description: string;
+  fileUrl: string;
+  createdAt: Date;
+}
+
 ```
 
 ### Express Route and Controller for Devices
 
 ```typescript
-// Example Express route and controller for device registration
+// routes/deviceRoutes.ts
+import express from 'express';
+import { registerDevice } from '../controllers/deviceController';
+const router = express.Router();
+router.post('/register', registerDevice);
+export default router;
+
+// controllers/deviceController.ts
+import { Request, Response } from 'express';
+import { registerDeviceService } from '../services/deviceService';
+
+export const registerDevice = async (req: Request, res: Response) => {
+  // Implementation of device registration logic
+};
+
 ```
 
 ### Device Service and MongoDB Interaction
 
 ```typescript
-// Example service layer for device registration with MongoDB
+// services/deviceService.ts
+import DeviceModel from '../models/deviceModel'; // Mongoose model
+import { Device } from '../interfaces/Device';
+
+export const registerDeviceService = async (deviceData: Device): Promise<Device> => {
+  const device = new DeviceModel(deviceData);
+  await device.save();
+  return device;
+};
+
 ```
 
 ## Security and Reliability Considerations
